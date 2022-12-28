@@ -5,6 +5,7 @@ local options = {
     separator_style = "default", -- default/round/block/arrow
     overriden_modules = nil,
   },
+}
 
 options = require("core.utils").load_override(options, "NvChad/ui")
 
