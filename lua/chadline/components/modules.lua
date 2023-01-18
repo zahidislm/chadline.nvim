@@ -1,7 +1,7 @@
 local fn = vim.fn
 local sep_style = vim.g.statusline_sep_style
 local separators = (type(sep_style) == "table" and sep_style)
-	or require("statusline_nvim.icons").statusline_separators[sep_style]
+	or require("chadline.icons").statusline_separators[sep_style]
 local sep_l = separators["left"]
 local sep_r = separators["right"]
 
@@ -122,8 +122,7 @@ M.LSP_status = function()
 	if rawget(vim, "lsp") then
 		for _, client in ipairs(vim.lsp.get_active_clients()) do
 			if client.attached_buffers[vim.api.nvim_get_current_buf()] then
-				return (vim.o.columns > 100 and "%#St_LspStatus#" .. "   LSP ~ " .. client.name .. " ")
-					or "   LSP "
+				return (vim.o.columns > 100 and "%#St_LspStatus#" .. "   " .. client.name .. " ") or "   "
 			end
 		end
 	end

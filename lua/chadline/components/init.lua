@@ -2,7 +2,7 @@ return {
 	run = function(config)
 		vim.g.statusline_sep_style = config.separator_style
 
-		local modules = require("statusline_nvim.statusline.modules")
+		local modules = require("chadline.components.modules")
 
 		if config.overriden_modules then
 			modules = vim.tbl_deep_extend("force", modules, config.overriden_modules())
