@@ -2,7 +2,7 @@ local M = {}
 
 M.statusline_separators = {
 	default = {
-		left = "",
+		left = "█",
 		right = " ",
 	},
 
