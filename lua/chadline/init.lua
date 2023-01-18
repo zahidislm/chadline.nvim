@@ -1,8 +1,6 @@
 local default_config = {
-	statusline = {
-		separator_style = "default", -- default/round/block/arrow
-		overriden_modules = nil,
-	},
+	separator_style = "default", -- default/round/block/arrow
+	overriden_modules = nil,
 }
 
 local M = {}
