@@ -5,7 +5,7 @@ return {
 		local modules = require("chadline.components.modules")
 
 		if config.overriden_modules then
-			modules = vim.tbl_deep_extend("force", modules, config.overriden_modules())
+			modules = vim.tbl_deep_extend("force", modules, config.overriden_modules)
 		end
 
 		return table.concat({
