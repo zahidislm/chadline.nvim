@@ -34,6 +34,18 @@ local modes = {
 	["!"] = { "SHELL", "St_TerminalMode" },
 }
 
+local function getIcon(default, filename)
+	local icon = " " .. default .. " "
+	local devicons_present, devicons = pcall(require, "nvim-web-devicons")
+
+	if devicons_present then
+		local ft_icon = devicons.get_icon(filename)
+		icon = (ft_icon ~= nil and " " .. ft_icon .. " ") or ""
+	end
+
+	return icon
+end
+
 local M = {}
 
 M.mode = function()
@@ -49,14 +61,8 @@ M.fileInfo = function()
 	local filename = (fn.expand("%") == "" and "Empty ") or fn.expand("%:t")
 
 	if filename ~= "Empty " then
-		local devicons_present, devicons = pcall(require, "nvim-web-devicons")
-
-		if devicons_present then
-			local ft_icon = devicons.get_icon(filename)
-			icon = (ft_icon ~= nil and " " .. ft_icon) or ""
-		end
-
-		filename = " " .. filename .. " "
+		icon = getIcon(icon, filename)
+		filename = filename .. " "
 	end
 
 	return "%#St_file_info#" .. icon .. filename .. "%#St_file_sep#" .. sep_r
@@ -120,9 +126,16 @@ end
 
 M.LSP_status = function()
 	if rawget(vim, "lsp") then
+		local icon = "   "
+		local filename = (fn.expand("%") == "" and "Empty ") or fn.expand("%:t")
+
+		if filename ~= "Empty " then
+			icon = getIcon(icon, filename)
+		end
+
 		for _, client in ipairs(vim.lsp.get_active_clients()) do
 			if client.attached_buffers[vim.api.nvim_get_current_buf()] then
-				return (vim.o.columns > 100 and "%#St_LspStatus#" .. "   " .. client.name .. " ") or "   "
+				return (vim.o.columns > 100 and "%#St_LspStatus#" .. icon .. client.name .. " ") or icon
 			end
 		end
 	end
